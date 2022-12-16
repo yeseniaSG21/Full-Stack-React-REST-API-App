@@ -1,2 +1,3 @@
 # Full-Stack-React-REST-API-App
  
+Beginning Dec. 16...
