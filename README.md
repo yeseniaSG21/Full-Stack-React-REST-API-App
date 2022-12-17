@@ -9,7 +9,7 @@ This project uses React to create a client for the existing school database REST
 - Basic Authentication
 - Node.js
 
-After using the Create React App tool to set up the initial project, steps taken were to:
+### After using the Create React App tool to set up the initial project, steps taken were to:
 * Use JavaScript and JSX to build out the components for the application in a modular fashion
 * Use React Router to set up routes
 * Use the Fetch API or a tool like Axios to fetch data from the REST API
@@ -17,18 +17,19 @@ After using the Create React App tool to set up the initial project, steps taken
 * Add to the supplied CSS to personalize the project
 
 ## To run project:
-First, install project's dependencies:
+First, install project's dependencies. Open a terminal for the api and a seperate for the client, then run in each:
 
 ```bash
   npm install
 ```
-Next, populate the database:
+Next, populate the database tn the api terminal:
 
 ```bash
   npm run seed
 ```
-Lastly, launch the application:
+Lastly, launch the server and application in both the api and the client terminal:
 
 ```bash
   npm start
 ```
+* Open http://localhost:3000 to browse the app
