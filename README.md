@@ -6,8 +6,9 @@ This project uses React to create a client for the existing school database REST
 ### This project uses:
 - React - Hooks, React Router, Context API, and Create React App
 - JSX
-- Basic Authentication
+- React Authentication
 - Node.js
+- REST API
 
 ### After using the Create React App tool to set up the initial project, steps taken were to:
 * Use JavaScript and JSX to build out the components for the application in a modular fashion
