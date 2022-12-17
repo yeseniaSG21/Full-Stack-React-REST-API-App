@@ -22,7 +22,7 @@ First, install project's dependencies. Open a terminal for the api and a seperat
 ```bash
   npm install
 ```
-Next, populate the database tn the api terminal:
+Next, populate the database in the api terminal:
 
 ```bash
   npm run seed
