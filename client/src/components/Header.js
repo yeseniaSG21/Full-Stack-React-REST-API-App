@@ -13,22 +13,22 @@ export default class Header extends React.PureComponent {
         const authUser = context.authenticatedUser;
         return (
             <div className="header">
-            <div className="bounds">
-                <h1 className="header--logo">MyAuth</h1>
-                <nav>
-                {authUser ? (       // Conditionally Render the Header Nav with authUser as the condition
-                    <React.Fragment>      // if true
-                    <span>Welcome, {authUser.name}!</span>
-                    <Link to="/signout">Sign Out</Link>
-                    </React.Fragment>
-                ) : (
-                    <React.Fragment>    // if false
-                    <Link className="signup" to="/signup">Sign Up</Link>
-                    <Link className="signin" to="/signin">Sign In</Link>
-                    </React.Fragment>
-                )}
-                </nav>
-            </div>
+                <div className="bounds">
+                    <h1 className="header--logo">MyAuth</h1>
+                    <nav>
+                        {authUser ? (       // Conditionally Render the Header Nav with authUser as the condition
+                            <React.Fragment>      
+                                <span>Welcome, {authUser.name}!</span>      
+                                <Link to="/signout">Sign Out</Link>         
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>    
+                                <Link className="signup" to="/signup">Sign Up</Link>
+                                <Link className="signin" to="/signin">Sign In</Link>
+                            </React.Fragment>
+                        )}
+                    </nav>
+                </div>
             </div>
         );
     }
