@@ -3,17 +3,6 @@ import './App.css';
 import React, { useState } from 'react';
 
 function App() {
-  const [ course, setCourse ] = useState(0);
-
-  fetch('http://localhost:5000/api/courses') 
-    .then(response => response.json())
-    .then(responseData => {
-      setCourse( responseData.forEach(course =>
-        console.log(course.title) )
-      )})
-    .catch(err => {
-      console.log( err );
-    });
 
   return (
     <div className="App">
