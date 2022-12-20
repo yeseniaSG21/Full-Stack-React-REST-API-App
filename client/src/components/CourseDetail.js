@@ -9,9 +9,6 @@ import { Route, Routes } from 'react-router-dom';
     ** Rendering an "Update Course" button for navigating to the "Update Course" screen.
 **/
 
-
-
-
 function CourseDetail() {
     return (
         <div>CourseDetail
