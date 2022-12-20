@@ -32,7 +32,7 @@ export default (props) => {
             </form>
         </div>
     );
-}
+};
 
 // Creates the Validation Errors to use in the Form above
 function ErrorsDisplay({ errors }) {
@@ -52,4 +52,4 @@ function ErrorsDisplay({ errors }) {
     }
 
     return errorsDisplay;
-}
+};
