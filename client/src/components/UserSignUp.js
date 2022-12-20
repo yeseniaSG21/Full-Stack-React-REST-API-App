@@ -95,7 +95,7 @@ export default class UserSignUp extends Component {
                 } else {
                     context.actions.signIn(emailAddress, password)
                         .then(() => {
-                            this.props.history.push('/users');    
+                            this.props.history.push('/');    
                         });
                 }
             })
@@ -106,6 +106,6 @@ export default class UserSignUp extends Component {
     };
     
     cancel = () => {
-        this.props.history.push('/');   //redirect you to the main page
+        this.props.history.push('/');   //redirect you to the main course page
     };
 }
