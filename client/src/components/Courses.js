@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 /**
  * This component provides the "Courses" screen by:
@@ -7,10 +7,10 @@ import React from 'react';
     ** Rendering a link to the "Create Course" screen.
  **/
 
+export default class Courses extends Component {
 
 
-export default function Courses() {
     return (
-        <div>Courses</div>
+        
     )
 }
