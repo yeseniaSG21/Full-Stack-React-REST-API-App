@@ -13,31 +13,99 @@ export default class UserSignUp extends Component {
     state = {
         firstName: '',
         lastName: '',
-        password: '',
         emailAddress: '',
+        password: '',
         errors: [],
     }
 
     render() {
-        const { firstName, lastName, password, emailAddress, errors } = this.state;
+        const { firstName, lastName, emailAddress, password, errors } = this.state;
     
         return (
             <div className="form--centered">
                 <h2>Sign Up</h2>
-                <form>
-                    <label htmlFor="firstName">First Name</label>
-                    <input id="firstName" name="firstName" type="text" defaultValue />
-                    <label htmlFor="lastName">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" defaultValue />
-                    <label htmlFor="emailAddress">Email Address</label>
-                    <input id="emailAddress" name="emailAddress" type="email" defaultValue />
-                    <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" defaultValue />
-                        <button className="button" type="submit">Sign Up</button>
-                        <button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
-                </form>
-                    <p>Already have a user account? Click here to <a href="sign-in.html">sign in</a>!</p>
-            </div>
+                <Form 
+                    cancel={this.cancel}
+                    errors={errors}
+                    submit={this.submit}
+                    submitButtonText="Sign Up"
+                    elements={() => (
+                        <React.Fragment>
+                            <input 
+                                id="firstName" 
+                                name="firstName" 
+                                type="text"
+                                value={firstName} 
+                                onChange={this.change} 
+                                placeholder="First Name" />
+                            <input 
+                                id="lastName" 
+                                name="lastName" 
+                                type="text"
+                                value={lastName} 
+                                onChange={this.change} 
+                                placeholder="Last Name" />
+                            <input 
+                                id="emailAddress" 
+                                name="emailAddress"
+                                type="text"
+                                value={emailAddress} 
+                                onChange={this.change} 
+                                placeholder="Email Address" />
+                            <input 
+                                id="password" 
+                                name="password"
+                                type="password"
+                                value={password} 
+                                onChange={this.change} 
+                                placeholder="Password" />
+                        </React.Fragment>
+                    )} />
+                <p>
+                    Already have a user account? Click here to <Link to="/signin">sign up</Link>!
+                </p>
+            </div>      
         )
     }
+
+    // Changes the state of the name with each input
+    change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState(() => {
+            return {
+                [name]: value
+            };
+        });
+    };
+    
+    // Submit function calls the createUser function from the api 
+    submit = () => {
+        const { context } = this.props;
+        const { firstName, lastName, emailAddress, password } = this.state;
+    
+        // Create user
+        const user = { firstName, lastName, emailAddress, password };
+    
+        context.data.createUser(user)
+            .then( errors => {
+                if (errors.length) {
+                    this.setState({ errors });
+                } else {
+                    context.actions.signIn(emailAddress, password)
+                        .then(() => {
+                            this.props.history.push('/users');    
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                this.props.history.push('/error');  //push to history stack
+            });
+    };
+    
+    cancel = () => {
+        this.props.history.push('/');   //redirect you to the main page
+    };
 }
