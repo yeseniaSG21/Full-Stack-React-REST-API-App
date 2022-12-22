@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Route, Routes } from 'react-router-dom';
 
@@ -9,7 +9,13 @@ import { Route, Routes } from 'react-router-dom';
     ** Rendering an "Update Course" button for navigating to the "Update Course" screen.
 **/
 
-function CourseDetail() {
+export default function CourseDetail() {
+    // Allows us to create state variables in the React function component
+    const [course, setCourse] = useState([]);
+
+
+
+
     return (
         <div>CourseDetail
             <Routes>
@@ -18,5 +24,3 @@ function CourseDetail() {
         </div>
     );
 }
-
-export default CourseDetail;
