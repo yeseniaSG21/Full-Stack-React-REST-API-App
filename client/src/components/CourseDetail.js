@@ -42,7 +42,7 @@ export default class CourseDetail extends Component {
 
         return (
             <React.Fragment>
-                <div>
+                <div className="actions--bar">
                     <Link>
 
                     </Link>
