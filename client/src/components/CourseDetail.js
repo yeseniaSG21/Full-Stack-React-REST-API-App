@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Route, Routes } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 /**
  * This component provides the "Course Detail" screen by:
@@ -9,18 +9,45 @@ import { Route, Routes } from 'react-router-dom';
     ** Rendering an "Update Course" button for navigating to the "Update Course" screen.
 **/
 
-export default function CourseDetail() {
-    // Allows us to create state variables in the React function component
-    const [course, setCourse] = useState([]);
+export default class CourseDetail extends Component {
+    state = {
+        course: [],
+        user: []
+    }
 
+    // Invoked immediately after a component is mounted onto DOM 
+    componentDidMount() {
+        const { context } = this.props;
+        const id = this.props.match.params.id;
 
+        context.data.getCourse(id)
+            .then(data => {
+                if (data) {
+                    this.setState({ course: data });
+                    this.setState({ user: data.User });
+                } else {
+                    this.props.history.push('/notfound');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                this.props.history.push('/error');
+            })
+    }
 
+    render() {
+        const { course, user } = this.state;
+        const { context } = this.props;
+        const authUser = context.authenticatedUser;
 
-    return (
-        <div>CourseDetail
-            <Routes>
-                <Route />
-            </Routes>
-        </div>
-    );
+        return (
+            <React.Fragment>
+                <div>
+                    <Link>
+
+                    </Link>
+                </div>
+            </React.Fragment>
+        );
+    }
 }
