@@ -9,7 +9,26 @@ import Form from './Form';
 **/
 
 export default class CreateCourse extends Component {
-    return (
-    
-    )
+    state = {
+        title: '',
+        description: '',
+        estimatedTime:'',
+        materialsNeeded: '',
+        errors: []
+    };
+
+    render() {
+        const { context } = this.props;
+        const { title, description, estimatedTime, materialsNeeded, errors } = this.state;
+        const authUser = context.authenticatedUser;
+
+        return (
+            <div className="wrap">
+                <h2>Create Course</h2>
+
+                <Form>
+                </Form>
+            </div>
+        );
+    }
 }
