@@ -14,7 +14,8 @@ import UserSignOut from './components/UserSignOut';
 import NotFound from './components/NotFound';
 
 // Import Context and Private Routes 
-
+import withContext from './Context';
+import PrivateRoute from './PrivateRoute';
 
 // Context given to components
 
