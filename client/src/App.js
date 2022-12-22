@@ -26,6 +26,16 @@ const App = () => (
   <Router>
     <div>
 
+      <Switch>
+        <Route exact path='/' component={Courses} />
+        <Route path='/courses/:id' component={} />
+
+        <Route path='signin' component={} />
+        <Route path='signup' component={} />
+        <Route path='signout' component={} />
+        <Route path='/notfound' component={NotFound} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   </Router>
 );
