@@ -15,7 +15,7 @@ import NotFound from './components/NotFound';
 
 // Import Context and Private Routes 
 import withContext from './Context';
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 // Context given to components
 
