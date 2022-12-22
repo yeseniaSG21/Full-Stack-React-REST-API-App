@@ -33,11 +33,9 @@ export default class Data {
         const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
         if (response.status === 200) {
             return response.json().then(data => data);
-        }
-        else if (response.status === 401) {
+        } else if (response.status === 401) {
             return null;
-        }
-        else {
+        } else {
             throw new Error();
         }
     }
@@ -47,25 +45,28 @@ export default class Data {
         const response = await this.api('/users', 'POST', user);
         if (response.status === 201) {
             return [];
-        }
-        else if (response.status === 400) {
+        } else if (response.status === 400) {
             return response.json().then(data => {
                 return data.errors;
             });
-        }
-        else {
+        } else {
             throw new Error();
         }
     }
 
     // API GET request to find courses
-    async getCourse() {
-
+    async getCourses() {
+        const response = await this.api('/courses', 'GET');
+        if (response.status === 200) {
+            return response.json().then(data => data);
+        } else {
+            throw new Error();
+        }
     }
 
     // API POST request to create a new course
-    async createCourse() {
-
+    async createCourse(body, currentUser) {
+        const response = await this.api('/courses', 'POST', body, )
     }
 
     // API PUT request to update a course
