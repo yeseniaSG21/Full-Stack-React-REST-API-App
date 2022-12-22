@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
  **/
 
 export default function Courses({ context }) {
-    // Allows us to create state variables in a React function component
+    // Allows us to create state variables in the React function component
     const [courses, setCourses] = useState([]);
 
     // Fetching data from the API 
