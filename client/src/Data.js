@@ -54,7 +54,7 @@ export default class Data {
         }
     }
 
-    // API GET request to find courses
+    // API GET request to find all courses
     async getCourses() {
         const response = await this.api('/courses', 'GET');
         if (response.status === 200) {
@@ -64,8 +64,18 @@ export default class Data {
         }
     }
 
+    // API GET request to find a course by id
+    async getCourse(id) {
+        const response = await this.api(`/courses/${id}`, 'GET');
+        if (response.status === 200) {
+            return response.json().then(course => course);
+        } else {
+            throw new Error();
+        }
+    }
+
     // API POST request to create a new course
-    async createCourse(body, currentUser) {
+    async createCourses(body, currentUser) {
         const response = await this.api('/courses', 'POST', body, true, currentUser);
         if (response.status === 201) {
             return [];
@@ -78,14 +88,31 @@ export default class Data {
         }
     }
 
-    // API PUT request to update a course
-    async updateCourse() {
-
+    // API PUT request to update an existing course
+    async updateCourse(id, course, currentUser) {
+        const response = await this.api(`/courses/${id}`, 'PUT', course, true, currentUser);
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 400) {
+            return response.json().then(data => {
+                return data.errors;
+            });
+        } else if (response.status === 404) {
+            throw new Error("404");
+        } else {
+            throw new Error("505");
+        }
     }
 
-
     // API DELETE request to delete courses
-    async deleteCourse() {
-
+    async deleteCourse(id, currentUser) {
+        const response = await this.api(`/courses/${id}`, 'DELETE', null, true, currentUser);
+        if (response.status === 204) {
+            return [];
+        } else if (response.status === 401) {
+            return null;
+        } else {
+            throw new Error();
+        }
     }
 }
