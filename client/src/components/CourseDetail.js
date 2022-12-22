@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /**
  * This component provides the "Course Detail" screen by:
@@ -43,11 +43,44 @@ export default class CourseDetail extends Component {
         return (
             <React.Fragment>
                 <div className="actions--bar">
-                    <Link>
-
-                    </Link>
+                    <div className="wrap">
+                        <Link></Link>
+                        <Link></Link>
+                    </div>
+                </div>
+                <div className="wrap">
+                    <h2>Course Detail</h2>
+                    <form>
+                        <div className="main--flex">
+                            <div>
+                                <h3 className="course--detail--title">Course</h3>
+                                <h4 className="course--name">{course.title}</h4>
+                                <p>By {user.firstName} {user.lastName}</p>
+                                <ReactMarkdown>{course.description}</ReactMarkdown>
+                            </div>
+                            <div>
+                                <h3 className="course--detail--title">Estimated Time</h3>
+                                <p>{course.estimatedTime}</p>
+                                <h3 className="course--detail--title">Materials Needed</h3>
+                                <ul className="course--detail--list">
+                                    <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </React.Fragment>
         );
     }
+
+    // To delete a course
+    delete = () => {
+        const { context } = this.props;
+        const user = context.authenticatedUser;
+
+        context.data.deleteCourse(this.state.course.id, user.emailAddress, user.password)
+            .then(() => {
+                this.props.history.push('/');
+            })
+    };
 }
