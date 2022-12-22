@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Form from './Form';
 
 /**
  * This component provides the "Update Course" screen by:
@@ -7,11 +8,9 @@ import React from 'react';
     ** Rendering a "Cancel" button that returns the user to the "Course Detail" screen.
 **/
 
+export default class UpdateCourse extends Component {
 
-function UpdateCourse() {
-    return (
-        <div>UpdateCourse</div>
-    )
+
+
 }
 
-export default UpdateCourse;
