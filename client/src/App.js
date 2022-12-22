@@ -22,8 +22,12 @@ import NotFound from './components/NotFound';
 
 
 //This is our main App component that will build our database through routes 
-const App = () => {
+const App = () => (
+  <Router>
+    <div>
 
-}
+    </div>
+  </Router>
+);
 
 export default App;
