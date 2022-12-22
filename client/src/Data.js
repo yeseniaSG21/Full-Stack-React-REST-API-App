@@ -7,14 +7,14 @@ import config from './config';
 **/
 
 export default class Data {
-    api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
+    api( path, method = 'GET', body = null, requiresAuth = false, credentials = null ) {
         const url = config.apiBaseUrl + path;
     
         const options = {
-        method,
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
+            method,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
         };
 
         if (body !== null) {
@@ -22,37 +22,60 @@ export default class Data {
         }
 
         if (requiresAuth) {    
-        const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`);
-        options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+            const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
+            options.headers['Authorization'] = `Basic ${encodedCredentials}`;
         }
         return fetch(url, options);
     }
 
-    async getUser(username, password) {
-        const response = await this.api(`/users`, 'GET', null, true, { username, password });
+    // API GET request to retrieve user
+    async getUser(emailAddress, password) {
+        const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
         if (response.status === 200) {
-        return response.json().then(data => data);
+            return response.json().then(data => data);
         }
         else if (response.status === 401) {
-        return null;
+            return null;
         }
         else {
-        throw new Error();
+            throw new Error();
         }
     }
     
+    // API POST request to create a new user
     async createUser(user) {
         const response = await this.api('/users', 'POST', user);
         if (response.status === 201) {
-        return [];
+            return [];
         }
         else if (response.status === 400) {
-        return response.json().then(data => {
-            return data.errors;
-        });
+            return response.json().then(data => {
+                return data.errors;
+            });
         }
         else {
-        throw new Error();
+            throw new Error();
         }
+    }
+
+    // API GET request to find courses
+    async getCourse() {
+
+    }
+
+    // API POST request to create a new course
+    async createCourse() {
+
+    }
+
+    // API PUT request to update a course
+    async updateCourse() {
+
+    }
+
+
+    // API DELETE request to delete courses
+    async deleteCourse() {
+
     }
 }
