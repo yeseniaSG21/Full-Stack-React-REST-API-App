@@ -66,7 +66,16 @@ export default class Data {
 
     // API POST request to create a new course
     async createCourse(body, currentUser) {
-        const response = await this.api('/courses', 'POST', body, )
+        const response = await this.api('/courses', 'POST', body, true, currentUser);
+        if (response.status === 201) {
+            return [];
+        } else if (response.status === 400) {
+            return response.json().then(data => {
+                return data.errors;
+            });
+        } else {
+            throw new Error();
+        }
     }
 
     // API PUT request to update a course
