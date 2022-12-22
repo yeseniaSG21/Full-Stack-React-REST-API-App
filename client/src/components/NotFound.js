@@ -1,6 +1,6 @@
 import React from 'react';
 
-// The page which will display on "Not Found" routes
+// This component will render when a route is not found
 export default () => (
     <div className="wrap">
         <h2>Not Found</h2>
