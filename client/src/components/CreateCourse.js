@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Form from './Form';
 
 /**
  * This component provides the "Create Course" screen by
@@ -7,11 +8,8 @@ import React from 'react';
     ** Rendering a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 **/
 
-
-function CreateCourse() {
+export default class CreateCourse extends Component {
     return (
-        <div>CreateCourse</div>
+    
     )
 }
-
-export default CreateCourse;
