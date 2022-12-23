@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 /**
  * This component doesn't render any visual elements. 
@@ -12,6 +12,6 @@ export default ({context}) => {
     useEffect(() =>  context.actions.signOut());
 
     return (
-        <Redirect to='/' />
+        <redirect to='/' />
     );
 };
