@@ -18,18 +18,23 @@ import withContext from './Context';
 import PrivateRoute from './components/PrivateRoute';
 
 // Context given to components
-
-
-
+const HeaderWithContext = withContext(Header);
+const CourseDetailWithContext = withContext(CourseDetail);
+const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
+const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
+const PrivateRouteWithContext = withContext(PrivateRoute);
 
 //This is our main App component that will build our database through routes 
 const App = () => (
   <Router>
+    <HeaderWithContext />
     <div>
-
       <Switch>
         <Route exact path='/' component={Courses} />
-        <Route path='/courses/:id' component={} />
+        <Route path='/courses/:id' component={CourseDetailWithContext} />
 
         <Route path='signin' component={} />
         <Route path='signup' component={} />
