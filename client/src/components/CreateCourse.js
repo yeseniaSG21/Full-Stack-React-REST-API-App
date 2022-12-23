@@ -38,7 +38,7 @@ function CreateCourse({ context }) {
 
         // Access the createCourse from Data.js
         context.data
-            .createCourse(course, authUser.emailAddress, authUser.password)
+            .createCourse(course, {emailAddress: authUser?.emailAddress, password: authUser?.password})
             .then(errors => {
                 if (errors.length) {
                     setErrors(errors);
