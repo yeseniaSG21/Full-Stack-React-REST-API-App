@@ -33,7 +33,7 @@ function CreateCourse({ context }) {
             materialsNeeded,
             estimatedTime, 
             userId, 
-            errors
+            errors,
         };
 
         // Access the createCourse from Data.js
