@@ -24,24 +24,22 @@ const UpdateCourseWithContext = withContext(UpdateCourse);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
-const PrivateRouteWithContext = withContext(PrivateRoute);
 
 //This is our main App component that will build our database through routes 
 const App = () => (
   <Router>
     <HeaderWithContext />
-    <div>
-      <Switch>
-        <Route exact path='/' component={Courses} />
-        <Route path='/courses/:id' component={CourseDetailWithContext} />
-
-        <Route path='signin' component={} />
-        <Route path='signup' component={} />
-        <Route path='signout' component={} />
-        <Route path='/notfound' component={NotFound} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path='/' component={Courses} />
+      <PrivateRoute exact path='/courses/create' component={CreateCourseWithContext} />
+      <PrivateRoute path='/courses/:id/update' component={UpdateCourseWithContext} />
+      <Route path='/courses/:id' component={CourseDetailWithContext} />
+      <Route path='signin' component={UserSignInWithContext} />
+      <Route path='signup' component={UserSignUpWithContext} />
+      <Route path='signout' component={UserSignOutWithContext} />
+      <Route path='/notfound' component={NotFound} />
+      <Route component={NotFound} />
+    </Switch>
   </Router>
 );
 
