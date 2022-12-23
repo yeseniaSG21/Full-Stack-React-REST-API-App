@@ -61,8 +61,8 @@ function UserSignUp(props) {
                                 name="firstName" 
                                 type="text"
                                 value={firstName} 
-                                onChange={event => setfirstName(event.target.value)} 
-                                placeholder="First Name..." />
+                                onChange={event => setfirstName(event.target.value)}
+                            />
                         <label>Last Name</label>
                             <input 
                                 id="lastName" 
@@ -70,7 +70,7 @@ function UserSignUp(props) {
                                 type="text"
                                 value={lastName} 
                                 onChange={event => setlastName(event.target.value)} 
-                                placeholder="Last Name..." />
+                            />
                         <label>Email Address</label>
                             <input 
                                 id="emailAddress" 
@@ -78,7 +78,7 @@ function UserSignUp(props) {
                                 type="email"
                                 value={emailAddress} 
                                 onChange={event => setEmailAddress(event.target.value)} 
-                                placeholder="Email Address..." />
+                            />
                         <label>Password</label>
                             <input 
                                 id="password" 
@@ -86,7 +86,7 @@ function UserSignUp(props) {
                                 type="password"
                                 value={password} 
                                 onChange={event => setPassword(event.target.value)} 
-                                placeholder="Password..." />
+                            />
                     </React.Fragment>
                 )} />
             <p>
