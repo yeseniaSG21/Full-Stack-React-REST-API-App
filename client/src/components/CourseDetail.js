@@ -22,8 +22,8 @@ function CourseDetail({ context }) {
         context.data.getCourse(id)
             .then(data => {
                 setCourse(data);
-                setfirstName(data.User.firstName);
-                setlastName(data.User.lastName);
+                setfirstName(data.user.firstName);
+                setlastName(data.user.lastName);
             })
             .catch(error => {
                 console.log(error);
