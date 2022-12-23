@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // Import Components
 import Header from './components/Header';
@@ -25,27 +25,32 @@ const UpdateCourseWithContext = withContext(UpdateCourse);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
-const PrivateRouteWithContext = withContext(PrivateRoute);
 
 //This is our main App component that will build our database through routes 
 const App = () => {
   return (
-    <>
-    <HeaderWithContext />
-    <Routes>
-      <Route exact path='/' element={<CoursesWithContext/>} />
-      <Route path='/courses/:id' element={<CourseDetailWithContext/>} />
-      <Route element={<PrivateRouteWithContext/>}>
-        <Route path='/courses/:id/update' element={<UpdateCourseWithContext/>} />
-        <Route exact path='/courses/create' element={<CreateCourseWithContext/>} />
-      </Route>
-      <Route path='signin' element={<UserSignInWithContext/>} />
-      <Route path='signup' element={<UserSignUpWithContext/>} />
-      <Route path='signout' element={<UserSignOutWithContext/>} />
-      <Route path='/notfound' element={<NotFound/>} />
-      <Route path='*' element={<NotFound/>} />
-    </Routes>
-  </>
+    <Router>
+      <header>
+        <HeaderWithContext />
+      </header>
+      <main>
+        {
+          <Routes>
+            <Route element={<PrivateRoute />}>
+                <Route path='/courses/:id/update' element={<UpdateCourseWithContext />} />
+                <Route exact path='/courses/create' element={<CreateCourseWithContext />} />
+            </Route>
+              <Route exact path='/' element={<CoursesWithContext />} />
+              <Route path='/courses/:id' element={<CourseDetailWithContext />} />
+              <Route path='signin' element={<UserSignInWithContext />} />
+              <Route path='signup' element={<UserSignUpWithContext />} />
+              <Route path='signout' element={<UserSignOutWithContext />} />
+              <Route path='/notfound' element={<NotFound />} />
+              <Route path='*' element={<NotFound />} />
+          </Routes>
+        }
+      </main>
+    </Router>
   );
 }
 
