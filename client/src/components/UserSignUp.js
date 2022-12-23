@@ -20,7 +20,6 @@ function UserSignUp(props) {
 
     // Cancel function to redirect to the main course page
     const cancel = (event) => {
-        event.preventDefault();
         navigate('/');   
     };
 

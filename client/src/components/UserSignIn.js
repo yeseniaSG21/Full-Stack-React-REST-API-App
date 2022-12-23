@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Form from './Form';
 
 /**
@@ -15,41 +15,32 @@ function UserSignIn(props) {
     const [ errors, setErrors ] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
+    const from = location.state?.from || { from: { pathname: '/' } };
     const { context } = props;;
 
     // Cancel function to redirect to the main course page
     const cancel = (event) => {
-        event.preventDefault();
         navigate('/');   
     };
 
     // Submit function calls the createUser function from the api 
     const submit = () => {
-        // Create user
-        const user = { firstName, lastName, emailAddress, password, errors };
-
-    context.actions.signIn(emailAddress, password)
-        .then((user) => {
-            if (user === null) {
-                this.setState(() => {
-                    return { errors: [ 'Sign-in was unsuccessful' ] };
-                });
-            } else {
-                this.props.history.push(from);
-                console.log(`SUCCESS! ${emailAddress} is now signed in!`);
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-            this.props.history.push('/error');
-        });
-}
-
-    // Write the "Cancel" Function
-    cancel = () => {
-        this.props.history.push('/');   // Redirect to main page
-    };
-
+        context.actions.signIn(emailAddress, password)
+            .then(user => {
+                if (user === null) {
+                    setErrors(() => {
+                        return [ 'Sign-in was unsuccessful' ];
+                    });
+                } else {
+                    navigate(from, { replace: true });
+                    console.log(`SUCCESS! ${emailAddress} is now signed in!`);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                navigate('/');  //Redirect back to the main page
+            });
+    }
 
     return (
         <div className="form--centered">
@@ -86,16 +77,4 @@ function UserSignIn(props) {
     );
 }
     
-    change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.setState(() => {
-            return {
-                [name]: value
-            };
-        });
-    };
-}
-
 export default UserSignIn;
