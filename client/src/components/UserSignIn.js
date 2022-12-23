@@ -60,7 +60,7 @@ function UserSignIn(props) {
                                 type="email"
                                 value={emailAddress} 
                                 onChange={event => setEmailAddress(event.target.value)} 
-                                placeholder="Email Address..." />
+                            />
                         <label>Password</label>
                             <input 
                                 id="password" 
@@ -68,7 +68,7 @@ function UserSignIn(props) {
                                 type="password"
                                 value={password} 
                                 onChange={event => setPassword(event.target.value)} 
-                                placeholder="Password..." />                
+                            />                
                     </React.Fragment>
                 )} />
             <p>
