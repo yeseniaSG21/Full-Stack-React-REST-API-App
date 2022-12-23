@@ -8,19 +8,17 @@ import { Link } from 'react-router-dom';
     ** Rendering a link to the "Create Course" screen.
  **/
 
-function Courses(props) {
-    const props = { context };
+function Courses({ context }) {
     const [courses, setCourses] = useState([]);
 
     // Fetch course data with helper method getCourses
     useEffect(() => {
         context.data.getCourses()
             .then(data => {
-                this.setState({ courses: data });
+                setCourses(data);
             })
             .catch(error => {
-                console.error(error);
-                this.props.history.push('/error');
+                console.log(error);
             })        
     }, [context.data] )
 
