@@ -90,7 +90,7 @@ function UserSignUp(props) {
                     </React.Fragment>
                 )} />
             <p>
-                Already have a user account? Click here to <Link to="/signin">sign up</Link>!
+                Already have a user account? Click here to <Link to="/signin">sign in</Link>!
             </p>
         </div>      
     );
