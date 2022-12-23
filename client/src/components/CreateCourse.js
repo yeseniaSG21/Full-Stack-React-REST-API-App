@@ -25,10 +25,94 @@ export default class CreateCourse extends Component {
         return (
             <div className="wrap">
                 <h2>Create Course</h2>
-
-                <Form>
-                </Form>
+                <Form
+                    cancel={this.cancel}
+                    errors={this.errors}
+                    submit={this.submit}
+                    submitButtonText='Create Course'
+                    elements={() => (
+                        <React.Fragment>
+                            <div className="main--flex">
+                                <div>
+                                    <label>Course Title</label>
+                                        <input 
+                                            id='title' 
+                                            name='title'
+                                            type='text' 
+                                            value={title}
+                                            onChange={this.change}
+                                        />
+                                        <p>By {context.authenticatedUser.firstName} {context.authenticatedUser.lastName}</p>
+                                    <label>Course Description</label>
+                                        <textarea 
+                                            id='description'
+                                            name='description'
+                                            type='text'
+                                            value={description}
+                                            onChange={this.change}
+                                        />
+                                </div>
+                                <div>
+                                    <label>Estimated Time</label>
+                                        <input 
+                                            id='estimatedTime' 
+                                            name='estimatedTime' 
+                                            type='text' 
+                                            value={estimatedTime}
+                                            onChange={this.change}
+                                        />
+                                    <label>Materials Needed</label>
+                                        <textarea 
+                                            id='materialsNeeded'
+                                            name='materialsNeeded'
+                                            type='text'
+                                            value={materialsNeeded}
+                                            onChange={this.change}
+                                            />
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    )}
+                />
             </div>
         );
     }
+
+    // Helper method to update the input fields
+    change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState(() => {
+            return {
+                [name]: value
+            };
+        });
+    }
+
+    // Send POST request
+    submit = () => {
+        const { context } = this.props;
+        const authUser = context.authenticatedUser;
+        const userId = authUser.id;
+        const { title, description, materialsNeeded, estimatedTime } = this.state;
+        const course = {
+            title,
+            description,
+            materialsNeeded,
+            estimatedTime, 
+            userId
+        }
+
+        // Access the createCourse from Data.js
+        context.data
+            .cre
+
+
+    }
+
+    // The "Cancel" Function
+    cancel = () => {
+        this.props.history.push('/');   // Redirect to main page
+    };
 }
