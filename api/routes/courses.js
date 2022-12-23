@@ -26,7 +26,7 @@ router.get("/courses", asyncHandler(async (req, res) => {
 // GET route that will return the corresponding course including the User associated with that course and a 200 HTTP status code.
 router.get('/courses/:id', asyncHandler(async (req, res) => { 
     const course = await Course.findByPk(req.params.id, {
-        attributes: [ 'id', 'title', 'description', 'userId' ],
+        attributes: [ 'id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId' ],
         include: [
             {
                 model: User,
