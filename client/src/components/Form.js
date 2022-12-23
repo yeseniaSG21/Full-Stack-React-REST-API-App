@@ -10,11 +10,13 @@ import React from 'react';
 const Form = (props) => {
     const { cancel, errors, submit, submitButtonText, elements } = props;
 
+    // Handles the form submission
     function handleSubmit(event) {
         event.preventDefault();
         submit();
     }
 
+    // Handles when the form is canceled
     function handleCancel(event) {
         event.preventDefault();
         cancel();
