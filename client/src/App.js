@@ -18,6 +18,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 // Context given to components
 const HeaderWithContext = withContext(Header);
+const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
@@ -32,7 +33,7 @@ const App = () => {
     <>
     <HeaderWithContext />
     <Routes>
-      <Route exact path='/' element={<Courses/>} />
+      <Route exact path='/' element={<CoursesWithContext/>} />
       <Route path='/courses/:id' element={<CourseDetailWithContext/>} />
       <Route element={<PrivateRouteWithContext/>}>
         <Route path='/courses/:id/update' element={<UpdateCourseWithContext/>} />
@@ -42,7 +43,7 @@ const App = () => {
       <Route path='signup' element={<UserSignUpWithContext/>} />
       <Route path='signout' element={<UserSignOutWithContext/>} />
       <Route path='/notfound' element={<NotFound/>} />
-      <Route component={NotFound} />
+      <Route path='*' element={<NotFound/>} />
     </Routes>
   </>
   );
