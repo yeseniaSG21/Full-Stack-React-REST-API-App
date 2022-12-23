@@ -19,7 +19,7 @@ function UserSignUp(props) {
     const { context } = props;
 
     // Cancel function to redirect to the main course page
-    const cancel = (event) => {
+    const cancel = () => {
         navigate('/');   
     };
 
