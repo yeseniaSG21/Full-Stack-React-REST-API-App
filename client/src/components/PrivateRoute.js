@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { Consumer } from './Context';
+import { Consumer } from '../Context';
 
 /**
  * This high-order component will serve for any  proteced routes and make accessible to authenticated users only. 
