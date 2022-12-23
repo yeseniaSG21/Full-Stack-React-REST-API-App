@@ -18,16 +18,9 @@ function UserSignUp(props) {
     const navigate = useNavigate();
     const { context } = props;
 
-    // Changes the state of the name with each input
-    change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.setState(() => {
-            return {
-                [name]: value
-            };
-        });
+    // Cancel function to redirect to the main course page
+    const cancel = () => {
+        navigate('/');   
     };
 
     // Submit function calls the createUser function from the api 
@@ -52,10 +45,6 @@ function UserSignUp(props) {
             });
     };
 
-    const cancel = () => {
-        navigate('/');   //redirect you to the main course page
-    };
-
     return (
         <div className="form--centered">
             <h2>Sign Up</h2>
@@ -66,41 +55,45 @@ function UserSignUp(props) {
                 submitButtonText="Sign Up"
                 elements={() => (
                     <React.Fragment>
+                        <label>First Name</label>
                             <input 
                                 id="firstName" 
                                 name="firstName" 
                                 type="text"
                                 value={firstName} 
-                                onChange={this.change} 
-                                placeholder="First Name" />
+                                onChange={event => setfirstName(event.target.value)} 
+                                placeholder="First Name..." />
+                        <label>Last Name</label>
                             <input 
                                 id="lastName" 
                                 name="lastName" 
                                 type="text"
                                 value={lastName} 
-                                onChange={this.change} 
-                                placeholder="Last Name" />
+                                onChange={event => setlastName(event.target.value)} 
+                                placeholder="Last Name..." />
+                        <label>Email Address</label>
                             <input 
                                 id="emailAddress" 
                                 name="emailAddress"
                                 type="email"
                                 value={emailAddress} 
-                                onChange={this.change} 
-                                placeholder="Email Address" />
+                                onChange={event => setEmailAddress(event.target.value)} 
+                                placeholder="Email Address..." />
+                        <label>Password</label>
                             <input 
                                 id="password" 
                                 name="password"
                                 type="password"
                                 value={password} 
-                                onChange={this.change} 
-                                placeholder="Password" />
-                        </React.Fragment>
-                    )} />
-                <p>
-                    Already have a user account? Click here to <Link to="/signin">sign up</Link>!
-                </p>
-            </div>      
-    )
+                                onChange={event => setPassword(event.target.value)} 
+                                placeholder="Password..." />
+                    </React.Fragment>
+                )} />
+            <p>
+                Already have a user account? Click here to <Link to="/signin">sign up</Link>!
+            </p>
+        </div>      
+    );
 }
 
 export default UserSignUp;
