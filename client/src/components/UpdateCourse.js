@@ -70,7 +70,7 @@ function UpdateCourse({ context }) {
 
     // Function to cancel update
     const cancel = () => {
-        navigate('/');
+        navigate(`/courses/${course.id}`);
     };
 
     return (
