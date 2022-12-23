@@ -17,6 +17,9 @@ This project uses React to create a client for the existing school database REST
 * Use basic authentication to support users signing in and allow new users to sign up
 * Add to the supplied CSS to personalize the project
 
+### To look through the App without Signing Up:
+* Use the credentials: email: `joe@smith.com` and password: `joepassword`
+
 ## To run project:
 First, install project's dependencies. Open a terminal for the api and a seperate for the client, then run in each:
 
