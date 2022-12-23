@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Form from './Form';
 
 /**
@@ -8,122 +9,105 @@ import Form from './Form';
     ** Rendering a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 **/
 
-export default class CreateCourse extends Component {
-    state = {
-        title: '',
-        description: '',
-        estimatedTime:'',
-        materialsNeeded: '',
-        errors: []
+function CreateCourse({ context }) {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [estimatedTime, setEstimatedTime] = useState('');
+    const [materialsNeeded, setMaterialsNeeded] = useState('');
+    const [errors, setErrors] = useState([]);
+
+    const authUser = context.authenticatedUser;
+    const navigate = useNavigate();
+    const userId = authUser.id;
+
+    // The cancel function to navigate back to main route 
+    const cancel = () => {
+        navigate('/');
     };
 
-    render() {
-        const { context } = this.props;
-        const { title, description, estimatedTime, materialsNeeded, errors } = this.state;
-        const authUser = context.authenticatedUser;
-
-        return (
-            <div className="wrap">
-                <h2>Create Course</h2>
-                <Form
-                    cancel={this.cancel}
-                    errors={this.errors}
-                    submit={this.submit}
-                    submitButtonText='Create Course'
-                    elements={() => (
-                        <React.Fragment>
-                            <div className="main--flex">
-                                <div>
-                                    <label>Course Title</label>
-                                        <input 
-                                            id='title' 
-                                            name='title'
-                                            type='text' 
-                                            value={title}
-                                            onChange={this.change}
-                                        />
-                                        <p>By {authUser.firstName} {authUser.lastName}</p>
-                                    <label>Course Description</label>
-                                        <textarea 
-                                            id='description'
-                                            name='description'
-                                            type='text'
-                                            value={description}
-                                            onChange={this.change}
-                                        />
-                                </div>
-                                <div>
-                                    <label>Estimated Time</label>
-                                        <input 
-                                            id='estimatedTime' 
-                                            name='estimatedTime' 
-                                            type='text' 
-                                            value={estimatedTime}
-                                            onChange={this.change}
-                                        />
-                                    <label>Materials Needed</label>
-                                        <textarea 
-                                            id='materialsNeeded'
-                                            name='materialsNeeded'
-                                            type='text'
-                                            value={materialsNeeded}
-                                            onChange={this.change}
-                                            />
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    )}
-                />
-            </div>
-        );
-    }
-
-    // Helper method to update the input fields
-    change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.setState(() => {
-            return {
-                [name]: value
-            };
-        });
-    };
-
-    // Send POST request
-    submit = () => {
-        const { context } = this.props;
-        const authUser = context.authenticatedUser;
-        const userId = authUser.id;
-        const authEmail = authUser.emailAddress;
-        const authPassword = authUser.password;
-        const { title, description, materialsNeeded, estimatedTime } = this.state;
+    // Send POST request to create the new course
+    const submit = () => {
         const course = {
             title,
             description,
             materialsNeeded,
             estimatedTime, 
-            userId
-        }
+            userId, 
+            errors
+        };
 
         // Access the createCourse from Data.js
         context.data
-            .createCourse(course, authEmail, authPassword)
-                .then(errors => {
-                    if (errors.length) {
-                        this.setState({errors});
-                    } else {
-                        this.props.history.push('/');
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.props.history.push('/error');
-                })
+            .createCourse(course, authUser.emailAddress, authUser.password)
+            .then(errors => {
+                if (errors.length) {
+                    setErrors(errors);
+                } else {
+                    navigate('/');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
     };
 
-    // The "Cancel" Function
-    cancel = () => {
-        this.props.history.push('/');   // Redirect to main page
-    };
+    return (
+        <div className="wrap">
+            <h2>Create Course</h2>
+            <Form
+                cancel={cancel}
+                errors={errors}
+                submit={submit}
+                submitButtonText='Create Course'
+                elements={() => (
+                    <React.Fragment>
+                        <div className="main--flex">
+                            <div>
+                                <label>Course Title</label>
+                                    <input 
+                                        id='title' 
+                                        name='title'
+                                        type='text' 
+                                        value={title}
+                                        onChange={event => setTitle(event.target.value)}
+                                    />
+                                    <p>By {authUser.firstName} {authUser.lastName}</p>
+
+                                <label>Course Description</label>
+                                    <textarea 
+                                        id='description'
+                                        name='description'
+                                        type='text'
+                                        value={description}
+                                        onChange={event => setDescription(event.target.value)}
+                                    />
+                            </div>
+
+                            <div>
+                                <label>Estimated Time</label>
+                                    <input 
+                                        id='estimatedTime' 
+                                        name='estimatedTime' 
+                                        type='text' 
+                                        value={estimatedTime}
+                                        onChange={event => setEstimatedTime(event.target.value)}
+                                    />
+
+                                <label>Materials Needed</label>
+                                    <textarea 
+                                        id='materialsNeeded'
+                                        name='materialsNeeded'
+                                        type='text'
+                                        value={materialsNeeded}
+                                        onChange={event => setMaterialsNeeded(event.target.value)}
+                                    />
+                            </div>
+                        </div>
+                    </React.Fragment>
+                )}
+            />
+        </div>
+    );
 }
+
+export default CreateCourse;
