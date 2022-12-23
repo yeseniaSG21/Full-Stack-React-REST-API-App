@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 /**
  * This component provides the "Course Detail" screen by:
@@ -12,7 +12,8 @@ import { Link } from 'react-router-dom';
 export default class CourseDetail extends Component {
     state = {
         course: [],
-        user: []
+        user: [],
+        errors: []
     }
 
     // Invoked immediately after a component is mounted onto DOM 
@@ -44,8 +45,19 @@ export default class CourseDetail extends Component {
             <React.Fragment>
                 <div className="actions--bar">
                     <div className="wrap">
-                        <Link></Link>
-                        <Link></Link>
+                    {authUser && authUser.emailAddress === user.emailAddress ? (
+                        <React.Fragment>
+                            <NavLink className='button' to={`/courses/${course.id}/update`}>
+                                Update Course
+                            </NavLink>
+                            <button className='button' onClick={this.remove}>Delete Course</button>
+                            <button className='button button-secondary' onClick={this.cancel}>Return to List</button>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <button className='button button-secondary' onClick={this.cancel}>Return to List</button>
+                        </React.Fragment>
+                    )}
                     </div>
                 </div>
                 <div className="wrap">
@@ -79,8 +91,16 @@ export default class CourseDetail extends Component {
         const user = context.authenticatedUser;
 
         context.data.deleteCourse(this.state.course.id, user.emailAddress, user.password)
-            .then(() => {
-                this.props.history.push('/');
+            .then(errors => {
+                if (errors.length) {
+                    this.setState({errors});
+                } else {
+                    this.props.history.push('/');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                this.props.history.push('/error');
             })
     };
 }
