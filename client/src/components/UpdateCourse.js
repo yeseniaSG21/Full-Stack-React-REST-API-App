@@ -39,7 +39,7 @@ function UpdateCourse({ context }) {
         })
         .catch(error => {
             console.log(error);
-        })
+        })    // eslint-disable-next-line
     }, []);
 
     // Function to handle update on the course 
