@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Form from './Form';
 
@@ -126,12 +126,6 @@ function UpdateCourse({ context }) {
                         </div>
                     </React.Fragment>
                 )}
-                <button className='button' type='submit'>
-                    UpdateCourse
-                </button>
-                <button onClick={cancel} className='button button-secondary'>
-                    Cancel
-                </button>
             />
         </div>
     );
