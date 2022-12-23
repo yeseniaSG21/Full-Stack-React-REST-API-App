@@ -16,7 +16,7 @@ function UserSignIn(props) {
     
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from || { from: { pathname: '/' } };
+    const from = location.state?.from || '/';
     const { context } = props;;
 
     // Cancel function to redirect to the main course page
