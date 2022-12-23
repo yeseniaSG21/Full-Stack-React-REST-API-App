@@ -27,7 +27,6 @@ function CourseDetail({ context }) {
             })
             .catch(error => {
                 console.log(error);
-                navigate('/notfound');
             })
     }, [id, context, navigate]);
     
