@@ -7,7 +7,7 @@ import React from 'react';
     ** Rendering Validation errors.
  **/
 
-export default (props) => {
+const Form = (props) => {
     const { cancel, errors, submit, submitButtonText, elements } = props;
 
     function handleSubmit(event) {
@@ -53,3 +53,5 @@ function ErrorsDisplay({ errors }) {
 
     return errorsDisplay;
 }
+
+export default Form;

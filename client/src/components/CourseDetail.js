@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { NavLink } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 /**
  * This component provides the "Course Detail" screen by:
@@ -9,98 +9,92 @@ import { NavLink } from 'react-router-dom';
     ** Rendering an "Update Course" button for navigating to the "Update Course" screen.
 **/
 
-export default class CourseDetail extends Component {
-    state = {
-        course: [],
-        user: [],
-        errors: []
-    }
+function CourseDetail({ context }) {
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const [ course, setCourse ] = useState([]);
+    const [ firstName, setfirstName ] = useState('');
+    const [ lastName, setlastName ] = useState('');
+    const authUser = context.authenticatedUser;
 
-    // Invoked immediately after a component is mounted onto DOM 
-    componentDidMount() {
-        const { context } = this.props;
-        const id = this.props.match.params.id;
-
+    // 
+    useEffect(() => {
         context.data.getCourse(id)
             .then(data => {
-                if (data) {
-                    this.setState({ course: data });
-                    this.setState({ user: data.User });
-                } else {
-                    this.props.history.push('/notfound');
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                this.props.history.push('/error');
-            })
-    }
-
-    render() {
-        const { course, user } = this.state;
-        const { context } = this.props;
-        const authUser = context.authenticatedUser;
-
-        return (
-            <React.Fragment>
-                <div className="actions--bar">
-                    <div className="wrap">
-                    {authUser && authUser.emailAddress === user.emailAddress ? (
-                        <React.Fragment>
-                            <NavLink className='button' to={`/courses/${course.id}/update`}>
-                                Update Course
-                            </NavLink>
-                            <button className='button' onClick={this.remove}>Delete Course</button>
-                            <button className='button button-secondary' onClick={this.cancel}>Return to List</button>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <button className='button button-secondary' onClick={this.cancel}>Return to List</button>
-                        </React.Fragment>
-                    )}
-                    </div>
-                </div>
-                <div className="wrap">
-                    <h2>Course Detail</h2>
-                    <form>
-                        <div className="main--flex">
-                            <div>
-                                <h3 className="course--detail--title">Course</h3>
-                                <h4 className="course--name">{course.title}</h4>
-                                <p>By {user.firstName} {user.lastName}</p>
-                                <ReactMarkdown>{course.description}</ReactMarkdown>
-                            </div>
-                            <div>
-                                <h3 className="course--detail--title">Estimated Time</h3>
-                                <p>{course.estimatedTime}</p>
-                                <h3 className="course--detail--title">Materials Needed</h3>
-                                <ul className="course--detail--list">
-                                    <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </React.Fragment>
-        );
-    }
-
-    // To delete a course
-    delete = () => {
-        const { context } = this.props;
-        const user = context.authenticatedUser;
-
-        context.data.deleteCourse(this.state.course.id, user.emailAddress, user.password)
-            .then(errors => {
-                if (errors.length) {
-                    this.setState({errors});
-                } else {
-                    this.props.history.push('/');
-                }
+                setCourse(data);
+                setfirstName(data.user.firstName);
+                setlastName(data.user.lastName);
             })
             .catch(error => {
                 console.log(error);
-                this.props.history.push('/error');
+                navigate('/notfound');
+            })
+    }, [id, context, navigate]);
+    
+    
+    // To delete a course via context
+    handleDelete = (event) => {
+        event.preventDefault();
+        const user = context.authenticatedUser;
+
+        context.data.deleteCourse(id, user.emailAddress, user.password, course)
+            .then(navigate('/'))
+            .catch(error => {
+                console.log(error);
+                navigate('/error');
             })
     };
+
+    return (
+        <main>
+            <div className="actions--bar">
+                <div className="wrap">
+                    {authUser && authUser.id === course.userId ? (
+                        <>
+                            <Link className='button' to={`/courses/${course.id}/update`}>
+                                Update Course
+                            </Link>
+                            <Link to='/' className='button' onClick={handleDelete}>
+                                Delete Course
+                            </Link>
+
+                            <Link to='/' className='button button-secondary'>
+                                Return to List
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to='/' className='button button-secondary'>
+                                Return to List
+                            </Link>
+                        </>
+                    )}
+                </div>
+            </div>
+            <div className="wrap">
+                <h2>Course Detail</h2>
+                <form>
+                    <div className="main--flex">
+                        <div>
+                            <h3 className="course--detail--title">Course</h3>
+                            <h4 className="course--name">{course.title}</h4>
+                            <p>By {user.firstName} {user.lastName}</p>
+                            <ReactMarkdown children={course.description} />
+                        </div>
+                        <div>
+                            <h3 className="course--detail--title">Estimated Time</h3>
+                            <p>{course.estimatedTime}</p>
+
+                            <h3 className="course--detail--title">Materials Needed</h3>
+                            <ul className="course--detail--list">
+                                <ReactMarkdown children={course.materialsNeeded} />
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    );
 }
+
+export default CourseDetail;
