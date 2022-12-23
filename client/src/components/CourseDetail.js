@@ -17,7 +17,7 @@ function CourseDetail({ context }) {
     const [ lastName, setlastName ] = useState('');
     const authUser = context.authenticatedUser;
 
-    // Fetch course data 
+    // Fetch course data with helper method getCourse
     useEffect(() => {
         context.data.getCourse(id)
             .then(data => {
