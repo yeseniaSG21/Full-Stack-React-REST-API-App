@@ -29,14 +29,14 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 // Create the Express app
 const app = express();
 
+// Setup cors
+app.use(cors());
+
 // Setup request body JSON parsing.
 app.use(express.json());
 
 // Setup morgan which gives us http request logging
 app.use(morgan('dev'));
-
-// Setup cors
-app.use(cors());
 
 // Setup a friendly greeting for the root route
 app.get('/', (req, res) => {
