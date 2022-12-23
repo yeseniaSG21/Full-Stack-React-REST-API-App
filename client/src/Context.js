@@ -70,7 +70,7 @@ export const Consumer = Context.Consumer;
     ** @returns {function} A higher-order component.
 **/
 
-export function withContext(Component) {
+export default function withContext(Component) {
     return function ContextComponent(props) {
         return (
         <Context.Consumer>
