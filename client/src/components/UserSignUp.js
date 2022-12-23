@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState} from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Form from './Form';
 
 /**
@@ -9,28 +9,63 @@ import Form from './Form';
     ** Rendering a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 **/
 
-export default class UserSignUp extends Component {
-    state = {
-        firstName: '',
-        lastName: '',
-        emailAddress: '',
-        password: '',
-        errors: [],
-    }
+function UserSignUp(props) {
+    const [ firstName, setfirstName ] = useState('');
+    const [ lastName, setlastName ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ emailAddress, setEmailAddress ] = useState('');
+    const [ errors, setErrors ] = useState([]);
+    const navigate = useNavigate();
+    const { context } = props;
 
-    render() {
-        const { firstName, lastName, emailAddress, password, errors } = this.state;
-    
-        return (
-            <div className="form--centered">
-                <h2>Sign Up</h2>
-                <Form 
-                    cancel={this.cancel}
-                    errors={errors}
-                    submit={this.submit}
-                    submitButtonText="Sign Up"
-                    elements={() => (
-                        <React.Fragment>
+    // Changes the state of the name with each input
+    change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState(() => {
+            return {
+                [name]: value
+            };
+        });
+    };
+
+    // Submit function calls the createUser function from the api 
+    const submit = () => {
+        // Create user
+        const user = { firstName, lastName, emailAddress, password, errors };
+
+        context.data.createUser(user)
+            .then( errors => {
+                if (errors.length) {
+                    setErrors(errors);
+                } else {
+                    context.actions.signIn(emailAddress, password)
+                        .then(() => {
+                            navigate('/', { replace: true });    
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                navigate('/error'); 
+            });
+    };
+
+    const cancel = () => {
+        navigate('/');   //redirect you to the main course page
+    };
+
+    return (
+        <div className="form--centered">
+            <h2>Sign Up</h2>
+            <Form 
+                cancel={cancel}
+                errors={errors}
+                submit={submit}
+                submitButtonText="Sign Up"
+                elements={() => (
+                    <React.Fragment>
                             <input 
                                 id="firstName" 
                                 name="firstName" 
@@ -65,47 +100,7 @@ export default class UserSignUp extends Component {
                     Already have a user account? Click here to <Link to="/signin">sign up</Link>!
                 </p>
             </div>      
-        )
-    }
-
-    // Changes the state of the name with each input
-    change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-    
-        this.setState(() => {
-            return {
-                [name]: value
-            };
-        });
-    };
-    
-    // Submit function calls the createUser function from the api 
-    submit = () => {
-        const { context } = this.props;
-        const { firstName, lastName, emailAddress, password } = this.state;
-    
-        // Create user
-        const user = { firstName, lastName, emailAddress, password };
-    
-        context.data.createUser(user)
-            .then( errors => {
-                if (errors.length) {
-                    this.setState({ errors });
-                } else {
-                    context.actions.signIn(emailAddress, password)
-                        .then(() => {
-                            this.props.history.push('/');    
-                        });
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                this.props.history.push('/error');  //push to history stack
-            });
-    };
-    
-    cancel = () => {
-        this.props.history.push('/');   //redirect you to the main course page
-    };
+    )
 }
+
+export default UserSignUp;

@@ -22,8 +22,8 @@ function CourseDetail({ context }) {
         context.data.getCourse(id)
             .then(data => {
                 setCourse(data);
-                setfirstName(data.user.firstName);
-                setlastName(data.user.lastName);
+                setfirstName(data.firstName);
+                setlastName(data.lastName);
             })
             .catch(error => {
                 console.log(error);
@@ -33,7 +33,7 @@ function CourseDetail({ context }) {
     
     
     // To delete a course via context
-    handleDelete = (event) => {
+    const handleDelete = (event) => {
         event.preventDefault();
         const user = context.authenticatedUser;
 
@@ -78,7 +78,7 @@ function CourseDetail({ context }) {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {user.firstName} {user.lastName}</p>
+                            <p>By {firstName} {lastName}</p>
                             <ReactMarkdown children={course.description} />
                         </div>
                         <div>
