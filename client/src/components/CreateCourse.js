@@ -42,7 +42,7 @@ export default class CreateCourse extends Component {
                                             value={title}
                                             onChange={this.change}
                                         />
-                                        <p>By {context.authenticatedUser.firstName} {context.authenticatedUser.lastName}</p>
+                                        <p>By {authUser.firstName} {authUser.lastName}</p>
                                     <label>Course Description</label>
                                         <textarea 
                                             id='description'
