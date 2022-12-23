@@ -88,13 +88,15 @@ export default class CreateCourse extends Component {
                 [name]: value
             };
         });
-    }
+    };
 
     // Send POST request
     submit = () => {
         const { context } = this.props;
         const authUser = context.authenticatedUser;
         const userId = authUser.id;
+        const authEmail = authUser.emailAddress;
+        const authPassword = authUser.password;
         const { title, description, materialsNeeded, estimatedTime } = this.state;
         const course = {
             title,
@@ -106,10 +108,19 @@ export default class CreateCourse extends Component {
 
         // Access the createCourse from Data.js
         context.data
-            .cre
-
-
-    }
+            .createCourse(course, authEmail, authPassword)
+                .then(errors => {
+                    if (errors.length) {
+                        this.setState({errors});
+                    } else {
+                        this.props.history.push('/');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.props.history.push('/error');
+                })
+    };
 
     // The "Cancel" Function
     cancel = () => {
