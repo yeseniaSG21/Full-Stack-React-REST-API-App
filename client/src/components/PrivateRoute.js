@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, redirect } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Consumer } from '../Context';
 
 /**
@@ -8,23 +8,24 @@ import { Consumer } from '../Context';
      ** If user is not authenticated, they will be redirected to the /signin route.
 **/
 
-export default ({ component: Component, ...rest }) => {
+function PrivateRoute() {
+    const location = useLocation();
+
     return (
         <Consumer>
-            {context => (
-                <Route
-                    {...rest}
-                    render={props => context.authenticatedUser ? (
-                        <Component {...props} />
-                    ) : (
-                        <redirect to={{
-                            pathname: '/signin',
-                            state: { from: props.location }
-                        }} />
-                    )
-                    }
-                />
-            )}
+            {context => 
+                context.authenticatedUser ? (
+                    <Outlet />
+                ) : (
+                    <Navigate
+                        to={'/signin'}
+                        state={ {from: location} }
+                        replace
+                    />
+                )
+            }
         </Consumer>
     );
 };
+
+export default PrivateRoute;
