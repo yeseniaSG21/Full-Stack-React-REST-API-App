@@ -17,7 +17,7 @@ function CourseDetail({ context }) {
     const [ lastName, setlastName ] = useState('');
     const authUser = context.authenticatedUser;
 
-    // 
+    // Fetch course data 
     useEffect(() => {
         context.data.getCourse(id)
             .then(data => {
@@ -71,6 +71,7 @@ function CourseDetail({ context }) {
                     )}
                 </div>
             </div>
+            
             <div className="wrap">
                 <h2>Course Detail</h2>
                 <form>
