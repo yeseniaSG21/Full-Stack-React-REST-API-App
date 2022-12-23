@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Form from './Form';
 
 /**
@@ -9,12 +9,45 @@ import Form from './Form';
     ** Rendering a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 **/
 
-export default class UserSignIn extends Component {
-    state = { 
-        emailAddress: '',
-        password: '',
-        errors: [],
+function UserSignIn(props) {
+    const [ password, setPassword ] = useState('');
+    const [ emailAddress, setEmailAddress ] = useState('');
+    const [ errors, setErrors ] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { context } = props;;
+
+// Create the Submit Function
+submit = () => {
+    const { context } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { emailAddress, password } = this.state;
+
+    context.actions.signIn(emailAddress, password)
+        .then((user) => {
+            if (user === null) {
+                this.setState(() => {
+                    return { errors: [ 'Sign-in was unsuccessful' ] };
+                });
+            } else {
+                this.props.history.push(from);
+                console.log(`SUCCESS! ${emailAddress} is now signed in!`);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            this.props.history.push('/error');
+        });
+}
+
+    // Write the "Cancel" Function
+    cancel = () => {
+        this.props.history.push('/');   // Redirect to main page
     };
+
+
+
+
 
     render() {
         const { emailAddress, password, errors } = this.state;
@@ -62,32 +95,6 @@ export default class UserSignIn extends Component {
             };
         });
     };
-
-    // Create the Submit Function
-    submit = () => {
-        const { context } = this.props;
-        const { from } = this.props.location.state || { from: { pathname: '/' } };
-        const { emailAddress, password } = this.state;
-
-        context.actions.signIn(emailAddress, password)
-            .then((user) => {
-                if (user === null) {
-                    this.setState(() => {
-                        return { errors: [ 'Sign-in was unsuccessful' ] };
-                    });
-                } else {
-                    this.props.history.push(from);
-                    console.log(`SUCCESS! ${emailAddress} is now signed in!`);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                this.props.history.push('/error');
-            });
-    }
-
-    // Write the "Cancel" Function
-    cancel = () => {
-        this.props.history.push('/');   // Redirect to main page
-    };
 }
+
+export default UserSignIn;
