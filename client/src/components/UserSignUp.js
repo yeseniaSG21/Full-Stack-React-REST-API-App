@@ -15,6 +15,7 @@ function UserSignUp(props) {
     const [ password, setPassword ] = useState('');
     const [ emailAddress, setEmailAddress ] = useState('');
     const [ errors, setErrors ] = useState([]);
+    
     const navigate = useNavigate();
     const { context } = props;
 
