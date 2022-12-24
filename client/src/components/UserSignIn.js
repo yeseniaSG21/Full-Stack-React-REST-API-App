@@ -70,7 +70,8 @@ function UserSignIn(props) {
                                 onChange={event => setPassword(event.target.value)} 
                             />                
                     </React.Fragment>
-                )} />
+                )} 
+            />
             <p>
                 Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
             </p>
