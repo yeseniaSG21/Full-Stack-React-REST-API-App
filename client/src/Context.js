@@ -5,13 +5,12 @@ import Data from './Data';
 const Context = React.createContext();
 
 export class Provider extends Component {
-    state = {
-        authenticatedUser: false
-    };
-
     constructor() {
         super();
         this.data = new Data();
+        this.state = {
+            authenticatedUser: null
+        };
         this.cookie = Cookies.get('authenticatedUser');
         this.state = {
             authenticatedUser: this.cookie ? JSON.parse(this.cookie) : null
