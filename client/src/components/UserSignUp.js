@@ -37,9 +37,8 @@ function UserSignUp({context}) {
     };
 
     // Submit function calls the createUser function from the api 
-    const submit = (e) => {
+    const submit = () => {
         // Create user
-        e.preventDefault();
         const user = { firstName, lastName, emailAddress, password, errors };
 
         context.data.createUser(user)
