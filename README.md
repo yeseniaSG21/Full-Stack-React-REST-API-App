@@ -36,4 +36,4 @@ Lastly, launch the server and application in both the api and the client termina
 ```bash
   npm start
 ```
-* Open http://localhost:3000 to browse the app
+* Open http://localhost:3000 in your web browse to view app
