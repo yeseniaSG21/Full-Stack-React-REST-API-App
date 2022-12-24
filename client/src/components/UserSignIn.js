@@ -17,7 +17,7 @@ function UserSignIn(props) {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from || '/';
-    const { context } = props;;
+    const { context } = props;
 
     // Cancel function to redirect to the main course page
     const cancel = () => {

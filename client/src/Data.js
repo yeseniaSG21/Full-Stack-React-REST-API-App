@@ -83,8 +83,8 @@ export default class Data {
     }
 
     // API POST request to create a new course
-    async createCourse(emailAddress, password, course) {
-        const response = await this.api('/courses', 'POST', course, true, {emailAddress, password, course});
+    async createCourse(course, emailAddress, password) {
+        const response = await this.api('/courses', 'POST', course, true, {emailAddress, password});
         if (response.status === 201) {
             return [];
         } else if (response.status === 400) {
@@ -98,7 +98,7 @@ export default class Data {
 
     // API PUT request to update an existing course
     async updateCourse(id, course, emailAddress, password) {
-        const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password, course});
+        const response = await this.api(`/courses/${id}`, 'PUT', course, true, {emailAddress, password});
         if (response.status === 204) {
             return [];
         } else if (response.status === 400) {
@@ -112,7 +112,7 @@ export default class Data {
 
     // API DELETE request to delete courses
     async deleteCourse(id, emailAddress, password, course) {
-        const response = await this.api(`/courses/${id}`, 'DELETE', course, true, {emailAddress, password, course});
+        const response = await this.api(`/courses/${id}`, 'DELETE', course, true, {emailAddress, password});
         if (response.status === 204) {
             return [];
         } else if (response.status === 400) {
