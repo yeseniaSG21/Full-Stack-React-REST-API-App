@@ -9,24 +9,37 @@ import Form from './Form';
     ** Rendering a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 **/
 
-function UserSignUp(props) {
+function UserSignUp({context}) {
     const [ firstName, setfirstName ] = useState('');
     const [ lastName, setlastName ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ emailAddress, setEmailAddress ] = useState('');
     const [ errors, setErrors ] = useState([]);
-    
     const navigate = useNavigate();
-    const { context } = props;
 
-    // Cancel function to redirect to the main course page
-    const cancel = () => {
-        navigate('/');   
+    // Function to handle change 
+    const change = (e) => {
+        e.preventDefault();
+        const name = e.target.name;
+        const value = e.target.value;
+
+        if (name === 'firstName') {
+            setfirstName(e.target.value);
+        } else if (name === 'lastName') {
+            setlastName(value);
+        } else if (name === 'emailAddress') {
+            setEmailAddress(value);
+        } else if (name === 'password') {
+            setPassword(value);
+        } else {
+            return;
+        }
     };
 
     // Submit function calls the createUser function from the api 
-    const submit = () => {
+    const submit = (e) => {
         // Create user
+        e.preventDefault();
         const user = { firstName, lastName, emailAddress, password, errors };
 
         context.data.createUser(user)
@@ -34,16 +47,22 @@ function UserSignUp(props) {
                 if (errors.length) {
                     setErrors(errors);
                 } else {
-                    context.actions.signIn(emailAddress, password)
-                        .then(() => {
-                            navigate('/', { replace: true });    
-                        });
+                    context.actions
+                    .signIn(emailAddress, password)
+                    .then(() => {
+                        navigate('/');    
+                    });
                 }
             })
             .catch((error) => {
                 console.log(error);
                 navigate('/error'); 
             });
+    };
+
+    // Cancel function to redirect to the main course page
+    const cancel = () => {
+        navigate('/');   
     };
 
     return (
@@ -62,7 +81,7 @@ function UserSignUp(props) {
                                 name="firstName" 
                                 type="text"
                                 value={firstName} 
-                                onChange={event => setfirstName(event.target.value)}
+                                onChange={change}
                             />
                         <label>Last Name</label>
                             <input 
@@ -70,7 +89,7 @@ function UserSignUp(props) {
                                 name="lastName" 
                                 type="text"
                                 value={lastName} 
-                                onChange={event => setlastName(event.target.value)} 
+                                onChange={change} 
                             />
                         <label>Email Address</label>
                             <input 
@@ -78,7 +97,7 @@ function UserSignUp(props) {
                                 name="emailAddress"
                                 type="email"
                                 value={emailAddress} 
-                                onChange={event => setEmailAddress(event.target.value)} 
+                                onChange={change} 
                             />
                         <label>Password</label>
                             <input 
@@ -86,7 +105,7 @@ function UserSignUp(props) {
                                 name="password"
                                 type="password"
                                 value={password} 
-                                onChange={event => setPassword(event.target.value)} 
+                                onChange={change} 
                             />
                     </React.Fragment>
                 )} />
