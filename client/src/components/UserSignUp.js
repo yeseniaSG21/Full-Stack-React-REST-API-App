@@ -74,7 +74,7 @@ function UserSignUp({context}) {
                 submitButtonText="Sign Up"
                 elements={() => (
                     <React.Fragment>
-                        <label>First Name</label>
+                        <label htmlFor='firstName'>First Name</label>
                             <input 
                                 id="firstName" 
                                 name="firstName" 
@@ -82,7 +82,7 @@ function UserSignUp({context}) {
                                 value={firstName} 
                                 onChange={change}
                             />
-                        <label>Last Name</label>
+                        <label htmlFor='lastName'>Last Name</label>
                             <input 
                                 id="lastName" 
                                 name="lastName" 
@@ -90,7 +90,7 @@ function UserSignUp({context}) {
                                 value={lastName} 
                                 onChange={change} 
                             />
-                        <label>Email Address</label>
+                        <label htmlFor='emailAddress'>Email Address</label>
                             <input 
                                 id="emailAddress" 
                                 name="emailAddress"
@@ -98,7 +98,7 @@ function UserSignUp({context}) {
                                 value={emailAddress} 
                                 onChange={change} 
                             />
-                        <label>Password</label>
+                        <label htmlFor='password'>Password</label>
                             <input 
                                 id="password" 
                                 name="password"
