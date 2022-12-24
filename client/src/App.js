@@ -45,7 +45,6 @@ const App = () => {
               <Route path='signin' element={<UserSignInWithContext />} />
               <Route path='signup' element={<UserSignUpWithContext />} />
               <Route path='signout' element={<UserSignOutWithContext />} />
-              <Route path='/notfound' element={<NotFound />} />
               <Route path='*' element={<NotFound />} />
           </Routes>
         }
